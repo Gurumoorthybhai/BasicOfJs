@@ -55,7 +55,7 @@
 <a href="http://za.ru"></a> -->
 
 
-<p>This is single p tag element</p>
+<!-- <p>This is single p tag element</p>
 
 <div>
     <p>This is a p tag element, with div as parent</p>
@@ -72,7 +72,25 @@
     <li>second ul li-2</li>
     <li>second ul li-3</li>
 </ul>
-</div>
+</div> -->
+
+
+<div> First div</div>
+
+<script>
+    const ele = document.getElementsByTagName('div');
+    console.log(ele.length);        // 1
+    
+
+    const querySelector = document.querySelectorAll('div');
+    console.log(querySelector.length);        // 1
+
+
+</script>
+
+
+<div> second div</div>
+
 
 <script>
 
@@ -104,7 +122,7 @@
     
 } */
 
-const ele = document.querySelector('.chapter');  // li
+/* const ele = document.querySelector('.chapter');  // li
 
 // closest, selects its self
 // console.log(ele.closest('ul > li'));   // itself
@@ -113,6 +131,11 @@ console.log(ele.closest('.book'));   // ul.book
 console.log(ele.closest('.content'));   // div.content
 
 console.log(ele.closest('p'));   // null if no matching
+ */
+
+    console.log(ele.length);   // 2
+
+    console.log(querySelector.length);        // 1
 
 
 </script>
