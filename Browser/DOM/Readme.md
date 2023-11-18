@@ -74,3 +74,24 @@ document.documentElement.parentNode // returns document
 document.documentElement.parentElement // null 
 
 because document is a node & not an element
+
+closest - ancestor, elements parent, parents parent
+
+document.getElementByTagName - returns a single element
+
+'s' on Elements
+document.getElementsByTagName - returns collections of element
+
+
+does not work
+so, let ele = document.getElementsByTagName('p').value = 10
+
+we should iterate to specific element & with index
+
+let ele = document.getElementsByTagName('p')[0].value = 10
+
+Diff b/w getElementBy vs querySelector
+
+getElementBy* returns a live update
+
+while querySelector returns a static result

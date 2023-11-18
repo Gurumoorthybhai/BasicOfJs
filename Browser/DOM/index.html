@@ -51,8 +51,28 @@
 </ul> -->
 
 
-<a href="http://example.com/file.zip"></a>
-<a href="http://za.ru"></a>
+<!-- <a href="http://example.com/file.zip"></a>
+<a href="http://za.ru"></a> -->
+
+
+<p>This is single p tag element</p>
+
+<div>
+    <p>This is a p tag element, with div as parent</p>
+</div>
+<div class="content">
+<ul class="book">
+    <li class="chapter">first ul li-1</li>
+    <li>first ul li-2</li>
+    <li>first ul li-3</li>
+</ul>
+
+<ul>
+    <li>second ul li-1</li>
+    <li>second ul li-2</li>
+    <li>second ul li-3</li>
+</ul>
+</div>
 
 <script>
 
@@ -75,13 +95,25 @@
 // matches
 // select the ele with css selector
 
-for (let ele of document.body.children) {
+
+/* for (let ele of document.body.children) {
     if(ele.matches('a[href$="zip"]'))
     {
         alert(ele.href)             //  http://example.com/file.zip
     }
     
-}
+} */
+
+const ele = document.querySelector('.chapter');  // li
+
+// closest, selects its self
+// console.log(ele.closest('ul > li'));   // itself
+
+console.log(ele.closest('.book'));   // ul.book
+console.log(ele.closest('.content'));   // div.content
+
+console.log(ele.closest('p'));   // null if no matching
+
 
 </script>
 
