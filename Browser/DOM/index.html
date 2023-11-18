@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script>alert(document.body)</script>
+    <!-- <script>alert(document.body)</script>      // null bcz body is not yet loaded -->
 </head>
 <body>
-    
+    <div>First Childnode</div>
+    <ul>
+        <li>Test 1</li>
+        <li>Test 2</li>
+        <li>Test 3</li>
+    </ul>
+    <p>Last Childnode</p>
+
+
+    <script>
+        for(let node of document.body.childNodes) {
+            console.log(node);
+        }
+
+        // console.log(document.body.childNodes.filter);    // undefined bcz array-like object & dont have array methods
+        console.log(Array.from(document.body.childNodes).filter);    // f filter() { [native code] }
+        
+    </script>
 </body>
 </html>
