@@ -7,6 +7,9 @@
     <!-- <script>alert(document.body)</script>      // null bcz body is not yet loaded -->
 </head>
 <body>
+
+    <!--
+
     <div>First Childnode</div>
     <ul>
         <li>Test 1</li>
@@ -17,13 +20,70 @@
 
 
     <script>
-        for(let node of document.body.childNodes) {
-            console.log(node);
-        }
+        // for(let node of document.body.childNodes) {
+        //     console.log(node);           // text, div, text, li
+        // }
 
+        for (let node of document.body.children) {
+            console.log(node);  // div, ul, p, script
+            
+        }
         // console.log(document.body.childNodes.filter);    // undefined bcz array-like object & dont have array methods
         // console.log(Array.from(document.body.childNodes).filter);    // f filter() { [native code] }
         
-    </script>
+    </script>  -->
+
+<!-- <div>
+    <div id="p1">This is the div element with id p1</div>
+</div> -->
+
+
+<!-- <ul>
+    <li>first ul li-1</li>
+    <li>first ul li-2</li>
+    <li>first ul li-3</li>
+</ul>
+
+<ul>
+    <li>second ul li-1</li>
+    <li>second ul li-2</li>
+    <li>second ul li-3</li>
+</ul> -->
+
+
+<a href="http://example.com/file.zip"></a>
+<a href="http://za.ru"></a>
+
+<script>
+
+// getElementById or id
+
+    // const ele = document.getElementById('p1');
+    // p1.style.background = 'red'
+
+// with id selector directly
+
+    // p1.style.background = 'yellow'
+
+// with css selector
+
+    // const elements = document.querySelectorAll('ul > li:last-Child');
+    
+    // for(let ele of elements)
+    // console.log(ele.innerHTML);            // first ul li-3, second ul li-3
+    
+// matches
+// select the ele with css selector
+
+for (let ele of document.body.children) {
+    if(ele.matches('a[href$="zip"]'))
+    {
+        alert(ele.href)             //  http://example.com/file.zip
+    }
+    
+}
+
+</script>
+
 </body>
 </html>

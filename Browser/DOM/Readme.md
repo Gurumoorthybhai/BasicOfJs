@@ -45,16 +45,32 @@ document.body.childNodes.filter instead Array.from(document.body.childNodes).fil
 
 DOM collections are live & read-only.
 
-For DOM collection iteration, use for..of instead for..in bcz it return all properties of the node
+For DOM collection iteration, use for..of instead for..in bcz it return all properties of the node, Nodes includes all nodes such as text, comment etc.,
 
 document.body.parentNode
 document.body.childNodes
 document.body.previousSibling
 document.body.nextSibling
-
+document.body.firstChild
+document.body.lastChild
 
 parent node of BODY is HTML
 console.log( document.body.parentNode === docucument.documentElement) ==> true
 
 next sibling of head is body
-console.log( document.head.nextSibling === document.body) ==> true
+console.log( document.head.nextSibling) HTMLBodyElement
+
+Element-only Navigation
+
+document.body.Children
+
+firstElementChild
+lastElementChild
+previousElementChild
+nextElementChild
+parentElement
+
+document.documentElement.parentNode // returns document
+document.documentElement.parentElement // null 
+
+because document is a node & not an element
