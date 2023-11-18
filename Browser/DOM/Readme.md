@@ -42,3 +42,19 @@ for(let node of document.body.childNodes) {
 2. No array methods
 
 document.body.childNodes.filter instead Array.from(document.body.childNodes).filter
+
+DOM collections are live & read-only.
+
+For DOM collection iteration, use for..of instead for..in bcz it return all properties of the node
+
+document.body.parentNode
+document.body.childNodes
+document.body.previousSibling
+document.body.nextSibling
+
+
+parent node of BODY is HTML
+console.log( document.body.parentNode === docucument.documentElement) ==> true
+
+next sibling of head is body
+console.log( document.head.nextSibling === document.body) ==> true
