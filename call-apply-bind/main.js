@@ -337,3 +337,31 @@ sayHello();
 // }
 // sayHello();
 
+// Practice on create map polyfill
+
+// arr.func() 
+// what does map function does?
+// it applys the received callback function on all the elements
+// it return as arr
+
+let arr = [1,2,3,4,5];
+
+// const callback = (x => x * 2);
+
+function add(x) {
+return x*2;
+}
+
+
+function newMap(func) {
+    const returnArr  = [];
+    const arrLen = this.length;
+    for (let i = 0; i < arrLen; i++) {
+        returnArr.push(func.call(null, this[i]))        // if the callback need this context, then pass this as arg func.call(this, this[i])
+    }
+    return returnArr
+}
+
+const result = newMap.call(arr, add);
+console.log(result);
+
