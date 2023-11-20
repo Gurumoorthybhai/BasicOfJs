@@ -74,8 +74,7 @@
 </ul>
 </div> -->
 
-
-<div> First div</div>
+<!-- <div> First div</div>
 
 <script>
     const ele = document.getElementsByTagName('div');
@@ -89,8 +88,20 @@
 </script>
 
 
-<div> second div</div>
+<div> second div</div> -->
 
+<div id="div-1">
+    <div id="div-2">
+        <ul>
+            <li>first ul first li</li>
+            <li>first ul second li</li>
+        </ul>
+
+        <div id="div-3">
+            <p> P tag</p>
+        </div>
+    </div>
+</div>
 
 <script>
 
@@ -133,10 +144,19 @@ console.log(ele.closest('.content'));   // div.content
 console.log(ele.closest('p'));   // null if no matching
  */
 
-    console.log(ele.length);   // 2
+    // console.log(ele.length);   // 2
 
-    console.log(querySelector.length);        // 1
+    // console.log(querySelector.length);        // 1
 
+    const findEle = document.querySelector('#div-2').children[0].lastElementChild;
+
+    const parentEle = document.querySelector('#div-1');
+
+    const outOfScopeEle = document.querySelector('#div-3');
+
+    console.log(parentEle.contains(findEle));    // true
+
+    console.log(outOfScopeEle.contains(findEle));    // false
 
 </script>
 
