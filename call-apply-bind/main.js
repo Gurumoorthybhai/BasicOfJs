@@ -283,7 +283,8 @@ calculateTotal();
 
 // usecase of bind()
 
-// 1. Class based component, to refer function 
+// 1. Class based component, reference to methods in constrctor
+// 2. Dynamic function creation
 /*
 
 const person = {
@@ -335,3 +336,4 @@ sayHello();
 //     return person.sayHello();
 // }
 // sayHello();
+
