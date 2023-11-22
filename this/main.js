@@ -209,7 +209,7 @@ function regularBoundFunction() {
     }.bind(this);
     
     setTimeout(function() {
-        console.log('regularAsyncOperation Inner Scope', this);     // Window
+        console.log('regularAsyncOperation Inner Scope', this);     // after binding 'this', it works
     }.bind(this))
 
     // resolution
