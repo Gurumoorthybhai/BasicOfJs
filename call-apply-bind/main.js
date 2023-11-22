@@ -344,13 +344,13 @@ sayHello();
 // it applys the received callback function on all the elements
 // it return as arr
 
-let arr = [1,2,3,4,5];
+// let arr = [1,2,3,4,5];
 
 // const callback = (x => x * 2);
 
-function add(x) {
-return x*2;
-}
+// function add(x) {
+// return x*2;
+// }
 
 /*
 
@@ -370,6 +370,8 @@ console.log(result);
 
 // The current implementation doesn't handles to check the argument of function is passed
 
+/*
+
 function newMap(func) {
     if( typeof func != 'function')
     throw new Error('A valid callback function must be provided');
@@ -388,6 +390,127 @@ const arr1 = [1,2,3,4,5];
 
 const callback = (x => x*2);
 
-const res = newMap.call(arr1);
+const res = newMap.call(arr1, callback);
 console.log(res);
 
+*/
+
+
+// Polyfill for forEach
+
+// const arr = [1,2,3,4,5];
+
+// const arr1 = [a1,a2,a3,a4,5];
+
+// applying forEach on array variable
+
+/* 
+// forEach Signature
+
+arr.forEach((value, index, arr) => {
+
+}, thisArg)
+
+*/
+
+
+// sample 1
+
+// arr.forEach((val, index, array) => {
+//     console.log(`The element index: ${index} - value: ${val}`);
+// })
+
+/*
+above o/p
+
+The element index: 0 - value: 1
+The element index: 1 - value: 2
+The element index: 2 - value: 3
+The element index: 3 - value: 4
+The element index: 4 - value: 5
+
+*/
+
+// sample 2
+
+/*
+
+const callBack = (val, index) => console.log(`index - ${index} - value - ${val}`);
+
+[10,20,30,40,50].forEach(callBack);
+
+*/
+
+/*
+above o/p 
+
+index - 0 - value - 10
+main.js:436 index - 1 - value - 20
+main.js:436 index - 2 - value - 30
+main.js:436 index - 3 - value - 40
+main.js:436 index - 4 - value - 50
+
+*/
+
+
+// sample 2
+// thisArg is set to sumObj, to accumulate sum, 
+// Only function expressions will have its own this binding
+
+/*
+
+const sumObj = { sum : 0 };
+arr.forEach(
+    function(val, index, array){
+
+    this.sum += val; 
+    // console.log(this);
+    
+    console.log(`Element index: ${index}: ${val}, sum is ${this.sum}`);
+    
+}, sumObj)
+
+*/
+
+/*
+above o/p 
+
+Element index: 0: 1, sum is 1
+main.js:466 Element index: 1: 2, sum is 3
+main.js:466 Element index: 2: 3, sum is 6
+main.js:466 Element index: 3: 4, sum is 10
+main.js:466 Element index: 4: 5, sum is 15
+
+*/
+
+
+// sample 3 with arrow function
+// Only function expressions will have its own this binding
+
+// const sumObj = { sum : 0 };
+
+// arr.forEach(
+//     (val, index, array) => {
+
+//     // this.sum += val; 
+//     console.log(this);      // windows
+    
+//     console.log(`Element index: ${index}: ${val}, sum is ${this.sum}`);
+    
+// })
+
+// if we need to set explict 'this',
+
+/*
+// it works
+
+arr.forEach(
+    (val, index) => 
+        (function(){
+        this.sum += val;
+        console.log(`Element index: ${index}: ${val}, sum is ${this.sum}`);
+        
+    }).call(sumObj)
+)
+
+*/
