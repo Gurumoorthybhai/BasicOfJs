@@ -352,6 +352,7 @@ function add(x) {
 return x*2;
 }
 
+/*
 
 function newMap(func) {
     const returnArr  = [];
@@ -364,4 +365,29 @@ function newMap(func) {
 
 const result = newMap.call(arr, add);
 console.log(result);
+
+*/
+
+// The current implementation doesn't handles to check the argument of function is passed
+
+function newMap(func) {
+    if( typeof func != 'function')
+    throw new Error('A valid callback function must be provided');
+
+    const returnArr = [];
+    const arrLen = this.length;
+
+    for (let i=0; i<arrLen; i++) {
+        returnArr.push(func.call(this, this[i]))
+    }
+    return returnArr;  
+}
+
+
+const arr1 = [1,2,3,4,5];
+
+const callback = (x => x*2);
+
+const res = newMap.call(arr1);
+console.log(res);
 
