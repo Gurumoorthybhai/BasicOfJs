@@ -514,3 +514,51 @@ arr.forEach(
 )
 
 */
+
+// polyfill forEach
+
+// newforEach.call(arr,callback);
+// const callback = () => {
+// console.log();
+
+// }
+
+// function newforEach(func) {
+
+//     const returnArr = [];
+//     const arrLen = this.length;
+
+//     for(let i = 0; i < arrLen; i++) {
+//         returnArr.push(func.call(this, this[i]))
+//     }
+
+// }
+
+// newforEach.call()
+
+if (!Array.prototype.customForEach) {
+
+Array.prototype.customForEach = function(func, thisArg) {
+
+    if (typeof func !== 'function') {
+        throw new TypeError(`${func} is not a function`)
+    }
+
+    // const returnArr = [];
+    const arrLen = this.length;
+
+    for(let i = 0; i < arrLen; i++) {
+    func.call(thisArg, this[i], i, this);
+    }
+// return returnArr;
+}
+}
+const arr = [1, 2, 3, 4, 5];
+
+
+const res = arr.customForEach((val, index) => console.log(`index ${index} - value ${val}`));
+// const res = arr.customForEach((val, index) =>  val > 3 ? val : -1);
+
+console.log(res);
+
+// console.log(arr.forEach(val => val > 3 ? val : -1));
