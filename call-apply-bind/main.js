@@ -536,6 +536,8 @@ arr.forEach(
 
 // newforEach.call()
 
+/*
+
 if (!Array.prototype.customForEach) {
 
 Array.prototype.customForEach = function(func, thisArg) {
@@ -562,3 +564,69 @@ const res = arr.customForEach((val, index) => console.log(`index ${index} - valu
 console.log(res);
 
 // console.log(arr.forEach(val => val > 3 ? val : -1));
+*/
+
+// with use of thisArg
+
+/*
+
+if (!Array.prototype.customForEach) {
+
+    Array.prototype.customForEach = function(func, thisArg) {
+
+        if(typeof func !== 'function') {
+            throw new TypeError('Callback function must be a function');
+        }
+
+        const arrLen = this.length;
+
+        for (let i = 0; i < arrLen; i++) {
+            func.call(thisArg, this[i], i, this)
+        }
+    }
+}
+
+const callback = function(value, index) {
+// console.log(this);
+
+    this.sum += value;
+    console.log(`Index - ${index}, value - ${value}, sum - ${this.sum}`);
+    
+}
+
+const arr = [ 1,2,3,4,5];
+const sumObj = { sum : 0 };
+
+arr.customForEach(callback, sumObj);
+
+// arr.customForEach(function(value, index) {
+//     // console.log(this);
+    
+//         this.sum += value;
+//         console.log(`Index - ${index}, value - ${value}, sum - ${this.sum}`);
+        
+//     }, sumObj);
+
+*/
+
+// What is the difference between using forEach for side effects and using it for a functional approach?
+
+// side effects, modify external variable effect outside the callback or state or logging
+
+
+// const arr = [1,2,3,4,5];
+
+// let sum = 0;
+// arr.forEach(val => sum += val);
+// console.log(sum);           // 15
+
+
+// functional approach, as per functional approach, a new array value is created inside the callback other than creating a side effects
+
+/*
+
+let doubleArr = [];
+arr.forEach(val => doubleArr.push(val * 2));
+console.log(doubleArr);           // [1, 4, 6, 8, 10]
+
+*/
