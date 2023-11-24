@@ -762,3 +762,68 @@ const resWithContext = user.find(searchContext.findMethod, searchContext);
 console.log(resWithContext);   // { name: 'b', age: 20},
 
 */
+
+
+// ex 4
+
+// using arrow function & destrcturing
+
+// const res = user.find(({age}) =>  age === 10);
+// console.log(res);           // {name: 'a', age: 10}
+
+
+
+// ex 5, with arrow function, 'this' pts to global
+
+/*
+
+const searchContext = {
+    target: 20,
+    findMethod: (element) => {
+        return element.age === this.target;
+    }
+}
+
+const bindFunc = searchContext.findMethod.bind(user);
+const resWithContext = user.find(bindFunc);
+
+console.log(resWithContext);            // undefined
+*/
+
+// ex 6  sparse array (without a value)
+
+// let sparseArr = [1,2,3, , , 6];
+
+// sparseArr.find((ele, index, array) => {
+//     console.log(`index-${index}, ele-${ele}`);
+// })
+
+// index-0, ele-1
+// main.js:799 index-1, ele-2
+// main.js:799 index-2, ele-3
+// main.js:799 index-3, ele-undefined
+// main.js:799 index-4, ele-undefined
+// main.js:799 index-5, ele-6
+
+// ex 7
+
+// callbackFn will not visit any elements added beyond the array's initial length when the call to find() began.
+// map, find, filer all methods look on arrays length as it's initial not while operation on callback
+let arr = [1,2,3,4,5];
+
+const res = arr.find((ele, index, array) => {
+    array.push(arr[arr.length-1]+index+1)
+    return ele > 5;
+})
+console.log(res);    // undefined bcz, new values has been added on callback but they are not consider
+
+
+// If an existing, yet-unvisited element of the array is changed by callbackFn, its value passed to the callbackFn will be the value at the time that element gets visited.
+
+const res1 = arr.find((ele, index, array) => {
+
+        array[0] = 6;
+        return ele > 3;
+    })
+    console.log(res1);   // 4, it considers the values at the time of call, & not updated values
+    
