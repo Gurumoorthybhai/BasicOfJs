@@ -1,6 +1,7 @@
 // https://www.freecodecamp.org/news/understand-call-apply-and-bind-in-javascript-with-examples/
 // context of this
 
+// write polyfill for forEach, map, filter, find, call, apply, bind, fill, splice, slice
 
 // function display() {
 //     console.log(this.age+ ' is calling');
@@ -609,7 +610,7 @@ arr.customForEach(callback, sumObj);
 
 */
 
-// What is the difference between using forEach for side effects and using it for a functional approach?
+//1. What is the difference between using forEach for side effects and using it for a functional approach?
 
 // side effects, modify external variable effect outside the callback or state or logging
 
@@ -628,5 +629,136 @@ arr.customForEach(callback, sumObj);
 let doubleArr = [];
 arr.forEach(val => doubleArr.push(val * 2));
 console.log(doubleArr);           // [1, 4, 6, 8, 10]
+
+*/
+
+// How will u handle error in polyfill
+
+// to avoid overridding on existing method or pollution
+
+/*
+
+if(!Array.prototype.forEachPolyfill) {
+
+    Array.prototype.forEachPolyfill = function(callback, thisArg) {
+
+        // 2. Check callback function type & thisArg type
+
+        if (typeof callback !== 'function') {
+            throw new TypeError(callback +'is not a function type')
+        }
+
+        // console.log(typeof thisArg);
+        
+        // 3. Check thisArg is object or null
+        if(thisArg !== undefined && thisArg !== null && typeof thisArg !== 'object') {
+            throw new TypeError('thisArg mush be a object type or null value')
+        }
+        console.log(this);
+        
+        const array = Object(this);
+        console.log(array);
+        
+        const arrLen = array.length;
+        
+        for (let i = 0; i < arrLen; i++) {
+            if (i in array) {
+                try {
+                    callback.call(thisArg, array[i], i, array);
+                }
+                catch(err) {
+                    // handle error in callback
+                    console.log('Error in callback', err);
+                    
+                }
+            }
+        }
+
+    }
+}
+
+let arr = [1,2,34,5];
+
+const sumObj = {sum:0};
+arr.forEachPolyfill((val) => {
+    // this = 20;
+    console.log(this);      // windows bcz of arrow function
+    
+}, sumObj)
+
+*/
+
+// why to use const arr = Object(this);
+// 1. to provide consisitency value of this
+// 2. To avoid potential error
+
+// function value() {
+//     console.log(typeof this);
+//     console.log(this.toFixed(2));
+// }
+
+// value.call(10);
+
+// function exampleFunction() {
+//     console.log(typeof this); // "number"
+//     console.log(this.toFixed(2)); // Error: this.toFixed is not a function
+// }
+
+// exampleFunction.call(42); // Calling with a primitive (number)
+
+
+// write pilyfill for find
+
+// find singnature
+
+// arr.find(callback, thisArg)
+
+// return new array
+// find() method returns the first matching value that satisifes the condition,
+// it iterates, until the condition it met, if reached end of the its lenght, undefined is returned
+
+
+/* const arr = [1,2,3,4,5];
+
+const res = arr.find(val => val > 3);           
+console.log(res);    */                // 4 , first matching value
+
+
+
+
+const user = [
+    { name: 'a', age: 10},
+    { name: 'b', age: 20},
+    { name: 'c', age: 30},
+]
+
+const thisContexnt = { search: 20};
+
+// ex 1:
+// const res1 = user.find(obj => obj.age === 20);
+// console.log(res1);                  // { name: 'b', age: 20}
+
+
+// ex 2:  thisArg
+
+/*
+
+const res1 = user.find(obj => obj.age === thisContexnt.search, thisContexnt);
+console.log(res1);                  // { name: 'b', age: 20}
+*/
+
+// ex 3:
+
+/*
+
+const searchContext = {
+    target: 20,
+    findMethod: function(element) {
+        return element.age === this.target;
+    }
+}
+const resWithContext = user.find(searchContext.findMethod, searchContext);
+
+console.log(resWithContext);   // { name: 'b', age: 20},
 
 */
