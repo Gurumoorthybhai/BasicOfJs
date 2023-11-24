@@ -809,21 +809,43 @@ console.log(resWithContext);            // undefined
 
 // callbackFn will not visit any elements added beyond the array's initial length when the call to find() began.
 // map, find, filer all methods look on arrays length as it's initial not while operation on callback
-let arr = [1,2,3,4,5];
+// let arr = [1,2,3,4,5];
 
-const res = arr.find((ele, index, array) => {
-    array.push(arr[arr.length-1]+index+1)
-    return ele > 5;
-})
-console.log(res);    // undefined bcz, new values has been added on callback but they are not consider
+// const res = arr.find((ele, index, array) => {
+//     array.push(arr[arr.length-1]+index+1)
+//     return ele > 5;
+// })
+// console.log(res);    // undefined bcz, new values has been added on callback but they are not consider
 
 
 // If an existing, yet-unvisited element of the array is changed by callbackFn, its value passed to the callbackFn will be the value at the time that element gets visited.
 
-const res1 = arr.find((ele, index, array) => {
+// const res1 = arr.find((ele, index, array) => {
 
-        array[0] = 6;
-        return ele > 3;
-    })
-    console.log(res1);   // 4, it considers the values at the time of call, & not updated values
-    
+//         array[0] = 6;
+//         return ele > 3;
+//     })
+//     console.log(res1);   // 4, it considers the values at the time of call, & not updated values
+
+// calling find on non-array-like object
+
+/*
+
+const nonArr = {
+    length: 5,
+    "-1": -10,
+    1: 10,
+    0: 20,
+    2: 40,
+    1: 30
+};
+*/
+
+Array.prototype.find.call(nonArr, (val,index) => console.log(index+" "+val));
+
+// It reads only positive index values, in ascending order
+// 0 20
+// 1 30
+// 2 40
+// 3 undefined
+// 4 undefined
