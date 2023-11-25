@@ -964,5 +964,34 @@ function returnsPromise() {
   console.log(arr.find(val => val));        // undefined
 
   */
- 
-  
+
+// Polyfill for find() method
+
+if (!Array.prototype.polyFillfilter) {
+
+    Array.prototype.polyFillfilter = async(callback, thisArg) => {
+
+
+        if (typeof callback !== 'function') {
+            throw new TypeError(callback+' should be a function');
+        }
+
+        const array = Object(this);
+        const arrayLen = array.length;
+        
+        let returnArr = [];
+        for(let i=0; i< arrayLen; i++) {
+            if (i in array) {
+                returnArr.push(callback.call(thisArg, array[i], i, array));
+            }
+        }
+
+        return returnArr;
+    }
+}
+
+const arr = [1,2,3,4,5,6];
+
+const res = arr.polyFillfilter(val => val > 3);
+
+console.log(res);
