@@ -200,7 +200,7 @@ const obj2 = new setPrice('1000000');
 //     this.entity = newEntity;
 
 //     console.log(`Entity ${this.entity} is mounted on ${JSON.stringify(this)}`);
-    
+
 // }
 
 // MountEntity.call();
@@ -495,9 +495,9 @@ main.js:466 Element index: 4: 5, sum is 15
 
 //     // this.sum += val; 
 //     console.log(this);      // windows
-    
+
 //     console.log(`Element index: ${index}: ${val}, sum is ${this.sum}`);
-    
+
 // })
 
 // if we need to set explict 'this',
@@ -726,13 +726,13 @@ console.log(res);    */                // 4 , first matching value
 
 
 
-const user = [
-    { name: 'a', age: 10},
-    { name: 'b', age: 20},
-    { name: 'c', age: 30},
-]
+// const user = [
+//     { name: 'a', age: 10},
+//     { name: 'b', age: 20},
+//     { name: 'c', age: 30},
+// ]
 
-const thisContexnt = { search: 20};
+// const thisContexnt = { search: 20};
 
 // ex 1:
 // const res1 = user.find(obj => obj.age === 20);
@@ -841,7 +841,7 @@ const nonArr = {
 };
 */
 
-Array.prototype.find.call(nonArr, (val,index) => console.log(index+" "+val));
+// Array.prototype.find.call(nonArr, (val,index) => console.log(index+" "+val));
 
 // It reads only positive index values, in ascending order
 // 0 20
@@ -849,3 +849,120 @@ Array.prototype.find.call(nonArr, (val,index) => console.log(index+" "+val));
 // 2 40
 // 3 undefined
 // 4 undefined
+
+// Real-Time usecase
+
+// Can you provide an example use case where the find method is more suitable than other array methods?
+
+// User Authentication
+// Imagine you have an array of user objects representing users in your web application. Each user object has an id property, and you want to find a specific user based on their id. In this scenario, the find method is more suitable than other array methods.
+
+//1. Why find is Suitable:
+
+// The find method is ideal in this scenario because it stops iterating through the array as soon as it finds the first user with the specified id. This is more efficient than using methods like filter or forEach that would continue to iterate through the entire array, even after finding the desired user.
+
+//2. Potential Alternatives:
+
+// If you used filter, you would get an array of users with the specified id, and you'd need to check if the array is empty or not. This is less efficient for this specific use case.
+// If you used forEach, you would need additional logic to break out of the loop once the user is found.
+
+
+// Real-World Application:
+
+// How would you handle asynchronous operations inside the callback function passed to the find method?
+// find is does not suport async promise call, bcz for first, promise is truthy value
+
+
+/*
+const userId = [10, 2, 3, 4, 5];
+
+const userDetails = [
+    { id: 1, name: '1-abcd' },
+    { id: 2, name: '2-abcd' },
+    { id: 3, name: '3-abcd' },
+    { id: 4, name: '4-abcd' },
+];
+
+const fetchUserDetails = (userId) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            try {
+                const userDetail = userDetails.find(user => userId === user.id);
+                if (userDetail) {
+                    resolve(userDetail);
+                } else {
+                    reject(`User with ID ${userId} not found`);
+                }
+            } catch (err) {
+                reject(err);
+            }
+        }, 0);
+    });
+};
+
+const findUser = async () => {
+    const findUserId = 4;
+
+    try {
+        const userFound =  userId.find(async (id) => {
+            try {
+                const val = await fetchUserDetails(id);
+                return val.id === id;
+            } catch (err) {
+                // Handle rejection if needed
+                console.error(`Error in fetching details for user with ID ${id}: ${err}`);
+                return false; // Returning false to indicate user not found
+            }
+        });
+
+        console.log("Do't wait");
+        
+        // Check for rejected promises (user not found)
+        if (userFound === false) {
+            console.log(`Unable to find the user`);
+        } else {
+            console.log(`The Username is ${userFound.name}`);
+        }
+    } catch (err) {
+        console.error(`Error in getting user: ${err}`);
+    }
+};
+
+findUser();
+*/
+
+
+/*
+
+function returnsPromise() {
+    return new Promise(resolve => resolve("done"));
+  }
+  
+  async function findThing() {
+    const promiseReturn = await returnsPromise();
+    return promiseReturn;
+  }
+  
+  async function run() {
+    const arr = [1, 2];
+    const found = await arr.find(async thing => {
+      const ret = await findThing();
+      console.log("runs once", thing);
+      return false;
+    });
+    console.log("doesn't wait");
+  }
+  
+  run();
+
+  */
+
+  /*
+
+  const arr = [ 0, NaN, null, undefined, '', false]; // false value
+
+  console.log(arr.find(val => val));        // undefined
+
+  */
+ 
+  
