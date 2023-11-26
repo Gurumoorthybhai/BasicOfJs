@@ -968,6 +968,8 @@ function returnsPromise() {
 // Polyfill for find() method
 
 
+/*
+
 if (!Array.prototype.polyFillFind) {
 
     Array.prototype.polyFillFind = function(callback, thisArg){
@@ -1012,6 +1014,127 @@ const res = arr.polyFillFind((val, index, array) => {
 
 console.log(res);
 
+*/
+
 // const arr = [1,2,3,4,5,6];
 
 // console.log(Array.prototype.find.call(null, val => val > 2));   main.js:1011 Uncaught TypeError: Array.prototype.find called on null or undefined
+
+
+// Promise
+
+
+// states of the promise => pending, rejected, fullfilled
+function CustomPromise(executor) {
+
+    console.log('exec', executor);
+    
+    this.state = 'pending';
+    this.value = undefined;
+    this.onFulfilledCallbacks = [];
+    this.onRejectedCallbacks = [];
+
+    const resolve = (value) => {
+
+        console.log(' resolve ');
+
+        if(this.state === 'pending') {
+            this.state = 'fulfilled';
+            this.value = value;
+            this.onFulfilledCallbacks.forEach(callback => callback(value));
+        }
+    }
+
+    const reject = (reason) => {
+
+        console.log(' reject ');
+        
+        if(this.state === 'pending') {
+            this.state = 'rejected';
+            this.value = reason;
+            this.onRejectedCallbacks.forEach(callback => callback(reason));
+        }
+
+    }
+
+    try {
+        console.log(' executor ');
+        
+        executor(resolve, reject);
+    } catch(err) {
+        console.log(err);
+        reject(err);
+    }
+}
+
+CustomPromise.prototype.then = function(onFulfilled, onRejected) {
+    console.log(onFulfilled);
+    console.log(onRejected);
+    
+    return new CustomPromise((resolve, reject) => {
+
+        const handleFulFilled = (value) => {
+            try {
+                if (typeof onFulfilled === 'function') {
+                    console.log('function');
+                    
+                    const result = onFulfilled(value);
+                    resolve(result);
+                } else {
+                    console.log('else');
+
+                    resolve(value);
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
+
+        const handleRejection = (reason) => {
+            try {
+                if (typeof onRejected === 'function') {
+                    const result = onRejected(reason);
+                    console.log('handle rej');
+
+                    resolve(result);
+                }
+                else {
+                    console.log('else 2');
+
+                    reject(reason);
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
+
+        if (this.state === 'fulfilled') {
+            handleFulFilled(this.value);
+        } else if (this.state === 'rejected') {
+            handleRejection(this.value);
+        }
+        else {
+            this.onFulfilledCallbacks.push(handleFulFilled);
+            this.onRejectedCallbacks.push(handleRejection);
+        }
+
+
+    })
+}
+
+
+const promise = new CustomPromise((resolve, reject) => {
+
+    setTimeout(() => {
+        const randomValue = Math.random();
+
+        if(randomValue > 0.5) {
+            resolve('Success')
+        }
+        else {
+            reject('reject');
+        }
+    })
+});
+
+promise.then(res => console.log("res - ", res), reason => console.error(" err - ", reason));
