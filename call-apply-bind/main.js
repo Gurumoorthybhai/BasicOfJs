@@ -1186,3 +1186,7 @@ function polyfillPromise(executor) {
 // above code works, but what if we have a synchronous call
 
 const promise1 = new polyfillPromise((resolve) => resolve(20)).then(val => console.log(val).catch(err => console.log(err)));
+
+
+// main.js:1165 Uncaught TypeError: onResolve is not a function
+// this is bcz, executor invoking gets completed even before assigning the 'then' callback function to OnResolve, resolve method is executed
