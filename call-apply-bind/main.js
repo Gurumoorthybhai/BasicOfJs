@@ -1018,6 +1018,20 @@ console.log(res);
 
 // const arr = [1,2,3,4,5,6];
 
+
+// executor
+
+// 1. we have a promise constructor function which accepts as callback function as a argument in our case as executors
+// constructor function will return a 2 properties (then & catch) which will receive a callback & also be chained, they should remain a reference to 'this'
+// new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         resolve('Success');
+//     }, 0);
+// })           => Is called the executor function
+
+
+
+
 // console.log(Array.prototype.find.call(null, val => val > 2));   main.js:1011 Uncaught TypeError: Array.prototype.find called on null or undefined
 
 
@@ -1025,6 +1039,8 @@ console.log(res);
 
 
 // states of the promise => pending, rejected, fullfilled
+
+/*
 function CustomPromise(executor) {
 
     console.log('exec', executor);
@@ -1138,3 +1154,35 @@ const promise = new CustomPromise((resolve, reject) => {
 });
 
 promise.then(res => console.log("res - ", res), reason => console.error(" err - ", reason));
+
+*/
+
+function polyfillPromise(executor) {
+
+    let onResolve;
+
+    function resolve(val) {
+        onResolve(val);
+    }
+
+    this.then = function(callback) {
+        onResolve = callback;
+        return this;
+    }
+
+    this.catch = function(callback) {
+        return this;
+    }
+    executor(resolve)
+
+}
+
+// const promise  = new polyfillPromise((resolve) => {
+//     setTimeout(() => {
+//             resolve(10);
+//     }, 0)}).then(val => console.log(val));
+
+
+// above code works, but what if we have a synchronous call
+
+const promise1 = new polyfillPromise((resolve) => resolve(20)).then(val => console.log(val).catch(err => console.log(err)));
