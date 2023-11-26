@@ -967,6 +967,7 @@ function returnsPromise() {
 
 // Polyfill for find() method
 
+
 if (!Array.prototype.polyFillFind) {
 
     Array.prototype.polyFillFind = function(callback, thisArg){
@@ -974,6 +975,10 @@ if (!Array.prototype.polyFillFind) {
 
         if (typeof callback !== 'function') {
             throw new TypeError(callback+' should be a function');
+        }
+
+        if(thisArg === null || thisArg === undefined) {
+            throw new TypeError(' find() method is called on null or undefined')
         }
 
         const array = Object(this);
@@ -993,7 +998,20 @@ if (!Array.prototype.polyFillFind) {
 }
 
 const arr = [1,2,3,4,5,6];
+const thisArg = 5;
 
-const res = arr.polyFillFind((val, index, array) => val > 6);
+const res = arr.polyFillFind((val, index, array) => {
+    array[array.length] =  array[array.length-1]+1;
+    // console.log(index);    it runs till the initial arr length 6
+
+    return val > thisArg;
+    
+}, thisArg);
+
+// passing null or undefined for thisArg
 
 console.log(res);
+
+// const arr = [1,2,3,4,5,6];
+
+// console.log(Array.prototype.find.call(null, val => val > 2));   main.js:1011 Uncaught TypeError: Array.prototype.find called on null or undefined
