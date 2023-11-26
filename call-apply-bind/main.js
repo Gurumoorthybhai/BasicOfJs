@@ -967,9 +967,9 @@ function returnsPromise() {
 
 // Polyfill for find() method
 
-if (!Array.prototype.polyFillfilter) {
+if (!Array.prototype.polyFillFind) {
 
-    Array.prototype.polyFillfilter = async(callback, thisArg) => {
+    Array.prototype.polyFillFind = function(callback, thisArg){
 
 
         if (typeof callback !== 'function') {
@@ -979,19 +979,21 @@ if (!Array.prototype.polyFillfilter) {
         const array = Object(this);
         const arrayLen = array.length;
         
-        let returnArr = [];
+        let returnVal = undefined;
         for(let i=0; i< arrayLen; i++) {
             if (i in array) {
-                returnArr.push(callback.call(thisArg, array[i], i, array));
+                if(callback.call(thisArg, array[i], i, array)) {
+                    return returnVal = array[i];
+                }
             }
         }
 
-        return returnArr;
+        return returnVal;
     }
 }
 
 const arr = [1,2,3,4,5,6];
 
-const res = arr.polyFillfilter(val => val > 3);
+const res = arr.polyFillFind((val, index, array) => val > 6);
 
 console.log(res);
